@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Employee Management System</title>
+
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 40px;
+	background-color: #f5f5f5;
+}
+
+.container {
+	max-width: 1100px;
+	margin: auto;
+	background: white;
+	padding: 30px;
+	border-radius: 8px;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.add-button {
+	display: inline-block;
+	padding: 10px 16px;
+	background-color: #198754;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+th {
+	background-color: #343a40;
+	color: white;
+}
+
+tr:nth-child(even) {
+	background-color: #f8f9fa;
+}
+
+.edit {
+	color: #0d6efd;
+	text-decoration: none;
+	margin-right: 10px;
+}
+
+.delete {
+	color: #dc3545;
+	text-decoration: none;
+}
+
+.empty {
+	text-align: center;
+	padding: 20px;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h1>Employee Management System</h1>
+
+		<a class="add-button" th:href="@{/employees/add}"> + Add Employee
+		</a>
+
+		<table>
+
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Department</th>
+					<th>Salary</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr th:each="employee : ${employees}">
+
+					<td th:text="${employee.id}"></td>
+
+					<td th:text="${employee.name}"></td>
+
+					<td th:text="${employee.email}"></td>
+
+					<td th:text="${employee.department}"></td>
+
+					<td th:text="${employee.salary}"></td>
+
+					<td><a class="edit"
+						th:href="@{/employees/edit/{id}(id=${employee.id})}"> Edit </a> <a
+						class="delete"
+						th:href="@{/employees/delete/{id}(id=${employee.id})}"
+						onclick="return confirm('Are you sure you want to delete this employee?');">
+							Delete </a></td>
+
+				</tr>
+
+				<tr th:if="${#lists.isEmpty(employees)}">
+					<td colspan="6" class="empty">No employees found.</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+	</div>
+
+</body>
+</html>

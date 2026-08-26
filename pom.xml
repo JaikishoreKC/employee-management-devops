@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -21,6 +22,12 @@
 
 	<properties>
 		<java.version>17</java.version>
+
+		<sonar.projectKey>employee-mgmt</sonar.projectKey>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.coverage.jacoco.xmlReportPaths>
+			${project.build.directory}/site/jacoco/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 
 	<dependencies>
@@ -63,7 +70,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Development tools -->
+		<!-- Development Tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -71,10 +78,17 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Testing: JUnit 5, Mockito, MockMvc, AssertJ, etc. -->
+		<!-- JUnit 5, Mockito, MockMvc, Jackson, AssertJ, etc. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Spring MVC Testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -95,6 +109,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<release>17</release>
+
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
@@ -126,7 +141,7 @@
 						</goals>
 					</execution>
 
-					<!-- Generate coverage report -->
+					<!-- Generate JaCoCo report during verify -->
 					<execution>
 						<id>report</id>
 						<phase>verify</phase>
@@ -136,6 +151,12 @@
 					</execution>
 
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>5.1.0.4751</version>
 			</plugin>
 
 		</plugins>
