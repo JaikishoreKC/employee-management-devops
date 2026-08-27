@@ -35,6 +35,23 @@ pipeline {
             }
         }
 
+        stage('Docker Push') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USERNAME',
+                    passwordVariable: 'DOCKER_PASSWORD'
+                )]) {
+                    bat '''
+                        docker login -u "%DOCKER_USERNAME%" -p "%DOCKER_PASSWORD%"
+                        docker tag employee-management-system:latest %DOCKER_USERNAME%/employee-management-system:latest
+                        docker push %DOCKER_USERNAME%/employee-management-system:latest
+                        docker logout
+                    '''
+                }
+            }
+        }
+
         stage('Docker Deploy') {
             steps {
                 bat '''
