@@ -57,7 +57,7 @@ pipeline {
                 bat '''
                     docker stop ems-container >nul 2>&1
                     docker rm ems-container >nul 2>&1
-                    docker run -d --name ems-container -p 8090:8090 employee-management-system:latest
+                    docker run -d --name ems-container -p 8090:8090 -e DB_HOST=host.docker.internal -e DB_PORT=3306 -e DB_USERNAME=root -e DB_PASSWORD=root employee-management-system:latest
                 '''
             }
         }
