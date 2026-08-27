@@ -28,5 +28,11 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t employee-management-system:latest .'
+            }
+        }
     }
 }
